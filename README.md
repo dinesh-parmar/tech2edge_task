@@ -1,16 +1,16 @@
 # tech2edge
-
-A new Flutter project.
+Task Submission for Tech2 Edge
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+##### Demo
 
-A few resources to get you started if this is your first Flutter project:
+1. Debug Apk is available [here](https://drive.google.com/drive/folders/1qH__8RDyvQFLuGdGelKKtLYt3eb0oLkU?usp=sharing)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+##### ScreenShots
+1. HomePage
+   ![SignupScreen](app_screenshots/homepage.jpg)
+2. Portrait Mode
+   ![LoginScreen](app_screenshots/portrait.jpg)
+3. Landscape
+   ![ContentHome](app_screenshots/landscape.jpg)
