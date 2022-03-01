@@ -65,41 +65,39 @@ class LandscapeMovieDetail extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
-                width: constraints.maxWidth * 0.4,
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Text(
-                          seriesDetail.series!.title!,
-                          textAlign: TextAlign.start,
-                          style: const TextStyle(decoration: TextDecoration.underline, fontWeight: FontWeight.bold, fontSize: 25, height: 1.2),
+              Flexible(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minWidth: constraints.maxWidth * 0.2, maxWidth: constraints.maxWidth * 0.4),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Text(
+                            seriesDetail.series!.title!,
+                            textAlign: TextAlign.start,
+                            style: const TextStyle(decoration: TextDecoration.underline, fontWeight: FontWeight.bold, fontSize: 25, height: 1.2),
+                          ),
                         ),
-                      ),
-                      Text(
-                        seriesDetail.series!.desc!,
-                        softWrap: true,
-                        style: const TextStyle(fontSize: 12),
-                      )
-                    ],
+                        Text(
+                          seriesDetail.series!.desc!,
+                          softWrap: true,
+                          style: const TextStyle(fontSize: 12),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(left: 8, bottom: 10, top: 10),
-                      child: Text("Characters:", style: TextStyle(fontSize: 18)),
-                    ),
-                    Expanded(child: CharactersBar(characters: seriesDetail.characters!, axis: Axis.vertical)),
-                  ],
+                child: CharactersBar(
+                  characters: seriesDetail.characters!,
+                  axis: Axis.vertical,
+                  size: constraints.maxWidth * 0.15,
                 ),
               ),
+              const SizedBox(width: 8),
             ],
           );
         }),

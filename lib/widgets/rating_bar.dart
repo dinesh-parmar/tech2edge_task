@@ -37,7 +37,16 @@ class RatingBar extends StatelessWidget {
             },
           ),
           const SizedBox(height: 10),
-          const Text("8.6/10", textAlign: TextAlign.end, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.yellow)),
+          TweenAnimationBuilder<double>(
+              tween: Tween(begin: 0, end: 8.6 / 10),
+              duration: const Duration(seconds: 1),
+              builder: (ctx, value, _) {
+                return Text(
+                  "${(value * 10).toStringAsPrecision(2)}/10",
+                  textAlign: TextAlign.end,
+                  style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.yellow),
+                );
+              }),
         ],
       ),
     );

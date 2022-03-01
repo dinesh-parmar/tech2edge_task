@@ -32,7 +32,7 @@ class PortraitMovieDetail extends StatelessWidget {
                   ),
                   items: [
                     GestureDetector(
-                      onTap: () => showImageDialog(Url.getImageUrl(seriesDetail.series!.img!)),
+                      onTap: () => showImageDialog(Url.getImageUrl(seriesDetail.series!.img!), axis: Axis.horizontal),
                       child: Container(
                         margin: const EdgeInsets.symmetric(horizontal: 30),
                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(color: Colors.purple)),
@@ -55,14 +55,6 @@ class PortraitMovieDetail extends StatelessWidget {
                 ),
                 const RatingBar(),
                 const SizedBox(height: 15),
-                const Padding(
-                  padding: EdgeInsets.only(left: 8, bottom: 8),
-                  child: Text("Characters:", style: TextStyle(fontSize: 18)),
-                ),
-                SizedBox(
-                  height: constraints.maxHeight * 0.17,
-                  child: CharactersBar(characters: seriesDetail.characters!, axis: Axis.horizontal),
-                ),
                 Padding(
                   padding: const EdgeInsets.all(15),
                   child: Text(
@@ -70,10 +62,19 @@ class PortraitMovieDetail extends StatelessWidget {
                     style: const TextStyle(decoration: TextDecoration.underline, fontWeight: FontWeight.bold, fontSize: 25, height: 1.2),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Text(seriesDetail.series!.desc!, style: const TextStyle(fontSize: 12)),
-                )
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Text(seriesDetail.series!.desc!, style: const TextStyle(fontSize: 12)),
+                  ),
+                ),
+                Expanded(
+                  child: CharactersBar(
+                    characters: seriesDetail.characters!,
+                    axis: Axis.horizontal,
+                    size: constraints.maxHeight * 0.13,
+                  ),
+                ),
               ],
             );
           },

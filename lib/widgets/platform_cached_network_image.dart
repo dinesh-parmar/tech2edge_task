@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class PlatformCachedNetworkImage extends StatelessWidget {
@@ -29,38 +30,42 @@ class PlatformCachedNetworkImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CachedNetworkImage(
-      imageUrl: imageUrl,
-      fit: fit,
-      width: width,
-      height: height,
-      httpHeaders: headers,
-      color: color,
-      colorBlendMode: colorBlendMode,
-      alignment: alignment ?? Alignment.center,
-      errorWidget: (context, url, e) => errorWidget?.call(context, e.toString()) ?? _CommonErrorWidget(error: e, size: width),
-      progressIndicatorBuilder: placeholder == null ? (context, url, loadingProgress) => Center(child: CircularProgressIndicator(value: loadingProgress.progress)) : null,
-      placeholder: placeholder != null ? (_, __) => placeholder! : null,
-    );
-  }
-}
-
-class _CommonErrorWidget extends StatelessWidget {
-  final dynamic error;
-  final double? size;
-
-  const _CommonErrorWidget({Key? key, this.error, this.size}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Icon(Icons.error, size: size),
-        const SizedBox(height: 10),
-        Text(error.toString()),
-      ],
-    );
+    return kIsWeb
+        ? Image.network(
+            imageUrl,
+            fit: fit,
+            width: width,
+            height: height,
+            headers: headers,
+            color: color,
+            colorBlendMode: colorBlendMode,
+            alignment: alignment ?? Alignment.center,
+            errorBuilder: errorWidget != null ? ((context, e, stack) => errorWidget!.call(context, e.toString())) : null,
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) {
+                return child;
+              }
+              return Center(
+                child: placeholder ??
+                    CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
+                    ),
+              );
+            },
+          )
+        : CachedNetworkImage(
+            imageUrl: imageUrl,
+            fit: fit,
+            width: width,
+            height: height,
+            httpHeaders: headers,
+            color: color,
+            colorBlendMode: colorBlendMode,
+            alignment: alignment ?? Alignment.center,
+            errorWidget: errorWidget != null ? ((context, e, stack) => errorWidget!.call(context, e.toString())) : null,
+            progressIndicatorBuilder:
+                placeholder == null ? (context, url, loadingProgress) => Center(child: CircularProgressIndicator(value: loadingProgress.progress)) : null,
+            placeholder: placeholder != null ? (_, __) => placeholder! : null,
+          );
   }
 }
